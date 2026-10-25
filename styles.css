@@ -16,3 +16,19 @@
 .cart-empty{text-align:center;color:#525850;line-height:1.8;padding:45px 0;font-size:14px}.cart-empty small{font-size:11px;color:#888}
 .cart-summary{margin-top:auto;border-top:1px solid #d9dad4;padding-top:20px}.cart-summary>div{display:flex;justify-content:space-between;align-items:center;font-size:13px}.cart-summary>div strong{font:600 22px "Space Grotesk",sans-serif}.cart-summary p{font-size:10px;line-height:1.6;color:#777d78}.cart-continue{width:100%;border:0;border-radius:30px;background:#111514;color:#fff;padding:15px;font-size:12px;font-weight:700;transition:transform .25s,background .25s}.cart-continue:hover{background:#777d5d;transform:translateY(-2px)}
 @media(max-width:640px){.cart-panel{padding:23px 20px}.cart-head h2{font-size:32px}}
+
+/* Product quick view */
+.product-img{isolation:isolate}
+.quick-trigger{position:absolute;z-index:4;left:11px;right:11px;bottom:54px;padding:11px 8px;border:1px solid #ffffffb0;background:#101415d9;color:#fff;font-size:10px;font-weight:700;opacity:0;transform:translateY(12px);transition:all .35s var(--ease);backdrop-filter:blur(8px)}
+.product:hover .quick-trigger,.quick-trigger:focus{opacity:1;transform:translateY(0)}
+.quick-view{position:fixed;inset:0;z-index:70;visibility:hidden;pointer-events:none}
+.quick-view.open{visibility:visible;pointer-events:auto}
+.quick-backdrop{position:absolute;inset:0;background:#000b;opacity:0;transition:opacity .3s}
+.quick-view.open .quick-backdrop{opacity:1}
+.quick-panel{position:absolute;left:50%;top:50%;transform:translate(-50%,-46%) scale(.97);width:min(850px,calc(100% - 32px));max-height:min(760px,calc(100% - 32px));overflow:auto;background:#f4f3ef;color:#111514;display:grid;grid-template-columns:1fr 1fr;opacity:0;transition:all .35s var(--ease)}
+.quick-view.open .quick-panel{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.quick-image{min-height:480px;background:#d8d8d2 center/cover no-repeat}
+.quick-info{padding:38px;display:flex;flex-direction:column;align-items:flex-start}
+.quick-close{position:absolute;right:14px;top:14px;z-index:2;width:38px;height:38px;border:1px solid #c9cbc4;border-radius:50%;background:#f4f3ef;font-size:24px}
+.quick-info .eyebrow{margin:0 0 14px}.quick-title{font:600 34px/1 "Space Grotesk",sans-serif;letter-spacing:-.06em;margin:0 40px 12px 0}.quick-price{font-weight:700;font-size:17px;margin:0 0 18px}.quick-description{font-size:12px;line-height:1.7;color:#686e67;margin:0 0 24px}.quick-info label{font-size:10px;font-weight:700;margin:0 0 9px}.quick-sizes,.quick-colors{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}.quick-sizes button{width:39px;height:39px;border:1px solid #c9cbc4;background:transparent;font-size:11px}.quick-sizes button.selected{background:#111514;color:#fff;border-color:#111514}.quick-colors button{display:flex;align-items:center;gap:7px;border:1px solid #d0d2ca;background:transparent;padding:8px 10px;font-size:10px}.quick-colors button.selected{border-color:#111514;box-shadow:inset 0 0 0 1px #111514}.quick-colors i{display:inline-block;width:15px;height:15px;border-radius:50%;border:1px solid #aaa}.quick-add{margin-top:auto;width:100%;border:0;background:#111514;color:#fff;padding:15px;font-size:11px;font-weight:700}.quick-add:hover{background:#777d5d}.quick-info>small{font-size:9px;color:#7c827b;margin-top:10px}
+@media(max-width:640px){.quick-trigger{opacity:1;transform:none;left:6px;right:6px;bottom:48px;padding:9px 4px;font-size:8px}.quick-panel{grid-template-columns:1fr;width:calc(100% - 22px);max-height:calc(100% - 22px)}.quick-image{min-height:220px;height:32vh}.quick-info{padding:24px}.quick-title{font-size:28px}.quick-description{margin-bottom:17px}.quick-sizes,.quick-colors{margin-bottom:16px}}
