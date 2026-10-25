@@ -32,3 +32,18 @@
 .quick-close{position:absolute;right:14px;top:14px;z-index:2;width:38px;height:38px;border:1px solid #c9cbc4;border-radius:50%;background:#f4f3ef;font-size:24px}
 .quick-info .eyebrow{margin:0 0 14px}.quick-title{font:600 34px/1 "Space Grotesk",sans-serif;letter-spacing:-.06em;margin:0 40px 12px 0}.quick-price{font-weight:700;font-size:17px;margin:0 0 18px}.quick-description{font-size:12px;line-height:1.7;color:#686e67;margin:0 0 24px}.quick-info label{font-size:10px;font-weight:700;margin:0 0 9px}.quick-sizes,.quick-colors{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}.quick-sizes button{width:39px;height:39px;border:1px solid #c9cbc4;background:transparent;font-size:11px}.quick-sizes button.selected{background:#111514;color:#fff;border-color:#111514}.quick-colors button{display:flex;align-items:center;gap:7px;border:1px solid #d0d2ca;background:transparent;padding:8px 10px;font-size:10px}.quick-colors button.selected{border-color:#111514;box-shadow:inset 0 0 0 1px #111514}.quick-colors i{display:inline-block;width:15px;height:15px;border-radius:50%;border:1px solid #aaa}.quick-add{margin-top:auto;width:100%;border:0;background:#111514;color:#fff;padding:15px;font-size:11px;font-weight:700}.quick-add:hover{background:#777d5d}.quick-info>small{font-size:9px;color:#7c827b;margin-top:10px}
 @media(max-width:640px){.quick-trigger{opacity:1;transform:none;left:6px;right:6px;bottom:48px;padding:9px 4px;font-size:8px}.quick-panel{grid-template-columns:1fr;width:calc(100% - 22px);max-height:calc(100% - 22px)}.quick-image{min-height:220px;height:32vh}.quick-info{padding:24px}.quick-title{font-size:28px}.quick-description{margin-bottom:17px}.quick-sizes,.quick-colors{margin-bottom:16px}}
+
+/* Demo checkout */
+.cart-checkout{width:100%;margin-top:10px;border:1px solid #111514;background:transparent;color:#111514;border-radius:30px;padding:14px;font-size:11px;font-weight:700;transition:all .25s}
+.cart-checkout:hover{background:#e5e5dc;transform:translateY(-2px)}
+.checkout-form{display:none;padding-top:18px;overflow-y:auto}
+.checkout-form.visible{display:block}
+.checkout-head h3{font:600 27px/1.1 "Space Grotesk",sans-serif;letter-spacing:-.05em;margin:16px 0 8px}
+.checkout-head p{font-size:11px;line-height:1.6;color:#737970;margin:0 0 22px}
+.checkout-back{border:0;background:transparent;padding:0;color:#666d63;font-size:11px;text-decoration:underline}
+.checkout-form>label{display:flex;flex-direction:column;gap:7px;margin:0 0 15px;font-size:10px;font-weight:700}
+.checkout-form input,.checkout-form textarea{width:100%;border:1px solid #d0d2ca;background:#fffefa;color:#111514;padding:12px;border-radius:2px;font:400 12px "DM Sans",sans-serif;outline:none}
+.checkout-form input:focus,.checkout-form textarea:focus{border-color:#777d5d;box-shadow:0 0 0 2px #777d5d22}
+.checkout-submit{width:100%;border:0;background:#111514;color:white;padding:15px;font-size:11px;font-weight:700;margin-top:5px}
+.checkout-feedback{font-size:10px;line-height:1.6;color:#4d6140}
+.checkout-preview{width:100%;margin-top:10px;padding:12px;border:1px solid #d0d2ca;background:#fffefa;color:#111514;font:11px/1.6 monospace;resize:vertical}
