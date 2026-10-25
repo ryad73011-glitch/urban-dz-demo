@@ -47,3 +47,14 @@
 .checkout-submit{width:100%;border:0;background:#111514;color:white;padding:15px;font-size:11px;font-weight:700;margin-top:5px}
 .checkout-feedback{font-size:10px;line-height:1.6;color:#4d6140}
 .checkout-preview{width:100%;margin-top:10px;padding:12px;border:1px solid #d0d2ca;background:#fffefa;color:#111514;font:11px/1.6 monospace;resize:vertical}
+
+
+/* Live product search */
+.product-search{display:flex;align-items:center;gap:9px;width:min(100%,300px);height:42px;padding:0 12px;border:1px solid #d4d6ce;background:#f7f6f1;color:#171b19;margin:14px 0 12px}
+.product-search .search-icon{font-size:22px;line-height:1;color:#777d5d;transform:rotate(-20deg)}
+.product-search input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:#171b19;font:400 11px "DM Sans",sans-serif}
+.product-search input::placeholder{color:#858a82}
+.product-search button{border:0;background:transparent;color:#171b19;font-size:20px;padding:0 2px;line-height:1;visibility:hidden}
+.search-results{display:none;margin:0 0 14px;font-size:11px;color:#737970}
+.search-results.visible{display:block}
+@media(max-width:640px){.product-search{width:100%;margin:14px 0}.filters>div:last-child{display:flex;flex-wrap:wrap;gap:6px}.filters>div:last-child .filter{margin:0}}
