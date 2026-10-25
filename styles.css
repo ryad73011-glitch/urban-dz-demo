@@ -58,3 +58,18 @@
 .search-results{display:none;margin:0 0 14px;font-size:11px;color:#737970}
 .search-results.visible{display:block}
 @media(max-width:640px){.product-search{width:100%;margin:14px 0}.filters>div:last-child{display:flex;flex-wrap:wrap;gap:6px}.filters>div:last-child .filter{margin:0}}
+
+/* Boutique website service CTA */
+.build-cta{display:flex;align-items:center;justify-content:space-between;gap:38px;padding:76px 9%;background:#e9e3d7;color:#111514}
+.build-cta-copy{max-width:620px}
+.build-cta .eyebrow{color:#777d5d;margin-bottom:18px}
+.build-cta h2{font:600 clamp(38px,5.4vw,66px)/.94 "Space Grotesk",sans-serif;letter-spacing:-.07em;margin:0 0 20px}
+.build-cta h2 em{font-style:normal;color:#777d5d}
+.build-cta-copy>p:not(.eyebrow){max-width:530px;color:#5f655e;font-size:13px;line-height:1.8}
+.build-cta-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.build-cta-tags span{border:1px solid #c7c4b9;border-radius:30px;padding:8px 11px;font-size:9px;color:#4d534b}
+.build-cta-link{flex-shrink:0;display:flex;flex-direction:column;gap:9px;background:#111514;color:#f3e8d6;padding:19px 22px;min-width:235px;font-size:12px;font-weight:700;transition:transform .3s,background .3s}
+.build-cta-link b{font-size:20px}
+.build-cta-link small{font-size:9px;font-weight:400;color:#aeb3ab}
+.build-cta-link:hover{transform:translateY(-4px);background:#343a30}
+@media(max-width:640px){.build-cta{padding:54px 7%;display:block}.build-cta-link{margin-top:28px;width:100%;min-width:0}.build-cta h2{font-size:43px}}
