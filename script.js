@@ -51,7 +51,32 @@
   $('.cart')?.addEventListener('click',openCart);
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCart()});
   $$('.add').forEach(b=>b.addEventListener('click',()=>{const card=b.closest('.product'),name=b.dataset.name||$('.product-meta h3',card)?.textContent||'Produit';const priceText=$('.product-meta strong',card)?.textContent||'0';const price=Number(priceText.replace(/[^0-9]/g,''));const category=card?.dataset.kind||'Sélection';const old=cart.get(name);cart.set(name,{qty:(old?.qty||0)+1,price,category});renderCart();notify(name+' ajouté au panier');const oldText=b.textContent;b.textContent='✓ Ajouté';setTimeout(()=>b.textContent=oldText,1200)}));
-  $$('.heart').forEach(b=>b.addEventListener('click',()=>{b.classList.toggle('liked');b.textContent=b.classList.contains('liked')?'♥':'♡';notify(b.classList.contains('liked')?'Ajouté aux favoris':'Retiré des favoris')}));
+  // Product quick-view with size and color choices (demo only).
+  const quickView=document.createElement('div');
+  quickView.className='quick-view';
+  quickView.innerHTML='<div class="quick-backdrop" data-qclose></div><section class="quick-panel" role="dialog" aria-modal="true" aria-label="Détails du produit"><button class="quick-close" data-qclose aria-label="Fermer">×</button><div class="quick-image"></div><div class="quick-info"><p class="eyebrow dark">URBAN DZ / DÉTAILS</p><h2 class="quick-title"></h2><p class="quick-price"></p><p class="quick-description">Une pièce de la sélection URBAN DZ. Choisis la taille et la couleur pour personnaliser ton panier de démonstration.</p><label for="quick-size">Taille</label><div class="quick-sizes"><button type="button">S</button><button type="button">M</button><button type="button">L</button><button type="button">XL</button></div><label for="quick-color">Couleur</label><div class="quick-colors"><button type="button" data-color="Noir"><i style="background:#171919"></i>Noir</button><button type="button" data-color="Beige"><i style="background:#d7c6a7"></i>Beige</button><button type="button" data-color="Blanc"><i style="background:#f5f4ef"></i>Blanc</button></div><button class="quick-add">Ajouter au panier — démo</button><small>Aucun paiement ni commande réelle.</small></div></section>';
+  document.body.appendChild(quickView);
+  let selectedProduct=null,selectedSize='M',selectedColor='Noir';
+  const closeQuick=()=>{quickView.classList.remove('open');document.body.classList.remove('cart-open')};
+  quickView.querySelectorAll('[data-qclose]').forEach(el=>el.addEventListener('click',closeQuick));
+  function openQuick(card){
+    selectedProduct=card;selectedSize='M';selectedColor='Noir';
+    const name=$('.product-meta h3',card)?.textContent||'Produit';
+    const priceText=$('.product-meta strong',card)?.textContent||'0';
+    const price=Number(priceText.replace(/[^0-9]/g,''));
+    const img=$('.product-img img',card);
+    $('.quick-title',quickView).textContent=name;
+    $('.quick-price',quickView).textContent=money(price);
+    $('.quick-image',quickView).style.backgroundImage=img?'url("'+img.src+'")':'none';
+    $('.quick-sizes button',quickView).forEach(b=>b.classList.toggle('selected',b.textContent===selectedSize));
+    $('.quick-colors button',quickView).forEach(b=>b.classList.toggle('selected',b.dataset.color===selectedColor));
+    quickView.classList.add('open');document.body.classList.add('cart-open');
+  }
+  $('.quick-sizes button',quickView).forEach(b=>b.addEventListener('click',()=>{selectedSize=b.textContent;$('.quick-sizes button',quickView).forEach(x=>x.classList.toggle('selected',x===b))}));
+  $('.quick-colors button',quickView).forEach(b=>b.addEventListener('click',()=>{selectedColor=b.dataset.color;$('.quick-colors button',quickView).forEach(x=>x.classList.toggle('selected',x===b))}));
+  products.forEach(card=>{const img=$('.product-img',card);if(!img)return;const detail=document.createElement('button');detail.className='quick-trigger';detail.type='button';detail.textContent='Voir les détails ↗';detail.addEventListener('click',()=>openQuick(card));img.appendChild(detail)});
+  $('.quick-add',quickView).addEventListener('click',()=>{if(!selectedProduct)return;const name=$('.quick-title',quickView).textContent+' · '+selectedSize+' · '+selectedColor;const price=Number(($('.quick-price',quickView).textContent||'0').replace(/[^0-9]/g,''));const category=selectedProduct.dataset.kind||'Sélection';const old=cart.get(name);cart.set(name,{qty:(old?.qty||0)+1,price,category+' / '+selectedSize+' / '+selectedColor});renderCart();closeQuick();notify('Ajouté : '+name);openCart()});
+  $('.heart').forEach(b=>b.addEventListener('click',()=>{b.classList.toggle('liked');b.textContent=b.classList.contains('liked')?'♥':'♡';notify(b.classList.contains('liked')?'Ajouté aux favoris':'Retiré des favoris')}));
   $('#view-all')?.addEventListener('click',()=>{filter('Tous');notify('Toute la sélection est affichée')});
   const WHATSAPP_NUMBER='';
   const url=WHATSAPP_NUMBER?'https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent('Bonjour, je souhaite en savoir plus sur vos produits URBAN DZ.'):'';
