@@ -27,9 +27,20 @@
     $$('.reveal').forEach(el=>observer.observe(el));
     document.documentElement.classList.add('js-reveal');
   }
-  const filters=$$('.filter'),products=$$('.product');
-  function filter(name){filters.forEach(b=>b.classList.toggle('active',b.dataset.filter===name));products.forEach(p=>p.classList.toggle('hidden',name!=='Tous'&&p.dataset.kind!==name))}
+  const filters=$('.filter'),products=$('.product');
+  let activeFilter='Tous';
+  const searchInput=$('#product-search'),clearSearch=$('#clear-search'),searchResults=$('#search-results');
+  function applyProductFilters(){
+    const query=(searchInput?.value||'').trim().toLocaleLowerCase('fr');let shown=0;
+    filters.forEach(b=>b.classList.toggle('active',b.dataset.filter===activeFilter));
+    products.forEach(p=>{const categoryMatch=activeFilter==='Tous'||p.dataset.kind===activeFilter;const text=[$('.product-meta h3',p)?.textContent,$('.product-meta p',p)?.textContent,p.dataset.kind].join(' ').toLocaleLowerCase('fr');const searchMatch=!query||text.includes(query);const visible=categoryMatch&&searchMatch;p.classList.toggle('hidden',!visible);if(visible)shown++});
+    if(searchResults){searchResults.textContent=shown?shown+' pièce'+(shown>1?'s':'')+' affichée'+(shown>1?'s':''):(query?'Aucun produit ne correspond à « '+query+' ».':'Aucun produit dans cette catégorie.');searchResults.classList.toggle('visible',Boolean(query)||shown===0)}
+    if(clearSearch)clearSearch.style.visibility=query?'visible':'hidden';
+  }
+  function filter(name){activeFilter=name;applyProductFilters()}
   filters.forEach(b=>b.addEventListener('click',()=>filter(b.dataset.filter)));
+  searchInput?.addEventListener('input',applyProductFilters);
+  clearSearch?.addEventListener('click',()=>{if(searchInput){searchInput.value='';searchInput.focus()}applyProductFilters()});
   $$('.cat').forEach(c=>c.addEventListener('click',()=>filter(c.dataset.category)));
   const toast=$('.toast');let toastTimer;
   function notify(msg){if(!toast)return;toast.textContent=msg;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2400)}
@@ -84,7 +95,7 @@
   products.forEach(card=>{const img=$('.product-img',card);if(!img)return;const detail=document.createElement('button');detail.className='quick-trigger';detail.type='button';detail.textContent='Voir les détails ↗';detail.addEventListener('click',()=>openQuick(card));img.appendChild(detail)});
   $('.quick-add',quickView).addEventListener('click',()=>{if(!selectedProduct)return;const name=$('.quick-title',quickView).textContent+' · '+selectedSize+' · '+selectedColor;const price=Number(($('.quick-price',quickView).textContent||'0').replace(/[^0-9]/g,''));const category=selectedProduct.dataset.kind||'Sélection';const old=cart.get(name);cart.set(name,{qty:(old?.qty||0)+1,price,category+' / '+selectedSize+' / '+selectedColor});renderCart();closeQuick();notify('Ajouté : '+name);openCart()});
   $('.heart').forEach((b,i)=>{const card=b.closest('.product');const key=card?($('.product-meta h3',card)?.textContent||String(i)):String(i);b.classList.toggle('liked',savedFavorites.has(key));b.textContent=b.classList.contains('liked')?'♥':'♡';b.setAttribute('aria-pressed',String(b.classList.contains('liked')));b.addEventListener('click',()=>{const liked=b.classList.toggle('liked');b.textContent=liked?'♥':'♡';b.setAttribute('aria-pressed',String(liked));if(liked)savedFavorites.add(key);else savedFavorites.delete(key);writeStorage(FAV_KEY,[...savedFavorites]);notify(liked?'Ajouté aux favoris':'Retiré des favoris')})});
-  $('#view-all')?.addEventListener('click',()=>{filter('Tous');notify('Toute la sélection est affichée')});
+  $('#view-all')?.addEventListener('click',()=>{filter('Tous');if(searchInput)searchInput.value='';applyProductFilters();notify('Toute la sélection est affichée')});
   // Demo checkout form: validates customer details but never submits a real order.
   const checkoutButton=document.createElement('button');
   checkoutButton.className='cart-checkout';checkoutButton.type='button';checkoutButton.textContent='Préparer ma commande ↗';
