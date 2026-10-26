@@ -27,7 +27,7 @@
     $$('.reveal').forEach(el=>observer.observe(el));
     document.documentElement.classList.add('js-reveal');
   }
-  const filters=$('.filter'),products=$('.product');
+  const filters=$$('.filter'),products=$$('.product');
   let activeFilter='Tous';
   const searchInput=$('#product-search'),clearSearch=$('#clear-search'),searchResults=$('#search-results');
   function applyProductFilters(){
@@ -86,12 +86,12 @@
     $('.quick-title',quickView).textContent=name;
     $('.quick-price',quickView).textContent=money(price);
     $('.quick-image',quickView).style.backgroundImage=img?'url("'+img.src+'")':'none';
-    $('.quick-sizes button',quickView).forEach(b=>b.classList.toggle('selected',b.textContent===selectedSize));
-    $('.quick-colors button',quickView).forEach(b=>b.classList.toggle('selected',b.dataset.color===selectedColor));
+    $$('.quick-sizes button',quickView).forEach(b=>b.classList.toggle('selected',b.textContent===selectedSize));
+    $$('.quick-colors button',quickView).forEach(b=>b.classList.toggle('selected',b.dataset.color===selectedColor));
     quickView.classList.add('open');document.body.classList.add('cart-open');
   }
-  $('.quick-sizes button',quickView).forEach(b=>b.addEventListener('click',()=>{selectedSize=b.textContent;$('.quick-sizes button',quickView).forEach(x=>x.classList.toggle('selected',x===b))}));
-  $('.quick-colors button',quickView).forEach(b=>b.addEventListener('click',()=>{selectedColor=b.dataset.color;$('.quick-colors button',quickView).forEach(x=>x.classList.toggle('selected',x===b))}));
+  $$('.quick-sizes button',quickView).forEach(b=>b.addEventListener('click',()=>{selectedSize=b.textContent;$$('.quick-sizes button',quickView).forEach(x=>x.classList.toggle('selected',x===b))}));
+  $$('.quick-colors button',quickView).forEach(b=>b.addEventListener('click',()=>{selectedColor=b.dataset.color;$$('.quick-colors button',quickView).forEach(x=>x.classList.toggle('selected',x===b))}));
   products.forEach(card=>{const img=$('.product-img',card);if(!img)return;const detail=document.createElement('button');detail.className='quick-trigger';detail.type='button';detail.textContent='Voir les détails ↗';detail.addEventListener('click',()=>openQuick(card));img.appendChild(detail)});
   $('.quick-add',quickView).addEventListener('click',()=>{if(!selectedProduct)return;const name=$('.quick-title',quickView).textContent+' · '+selectedSize+' · '+selectedColor;const price=Number(($('.quick-price',quickView).textContent||'0').replace(/[^0-9]/g,''));const category=selectedProduct.dataset.kind||'Sélection';const old=cart.get(name);cart.set(name,{qty:(old?.qty||0)+1,price,category+' / '+selectedSize+' / '+selectedColor});renderCart();closeQuick();notify('Ajouté : '+name);openCart()});
   $$('.heart').forEach((b,i)=>{const card=b.closest('.product');const key=card?($('.product-meta h3',card)?.textContent||String(i)):String(i);b.classList.toggle('liked',savedFavorites.has(key));b.textContent=b.classList.contains('liked')?'♥':'♡';b.setAttribute('aria-pressed',String(b.classList.contains('liked')));b.addEventListener('click',()=>{const liked=b.classList.toggle('liked');b.textContent=liked?'♥':'♡';b.setAttribute('aria-pressed',String(liked));if(liked)savedFavorites.add(key);else savedFavorites.delete(key);writeStorage(FAV_KEY,[...savedFavorites]);notify(liked?'Ajouté aux favoris':'Retiré des favoris')})});
